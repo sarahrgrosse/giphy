@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Giphy API</title>
+</head>
+
+<body>
+  <script src="./secrets.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <div id="buttons-container"></div>
+  <div id="images-container"></div>
+  <script type="text/javascript">
+    function handleClick(word) {
+      var queryURL = `https://api.giphy.com/v1/gifs/search?api_key=8ZCtLy9iyObCrx7AKoz2CZ760HUy6I4q&q=${word}&limit=10`;
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (response) {
+        //console.log(response);
+        response.data.forEach(function (giphy) {
+          var img = document.createElement("img")
+          img.src = giphy.images.downsized.url
+          document.getElementById("images-container").append(img)
+          console.log(giphy)
+        })
+      });
+      console.log(word)
+    }
+    var topics = ["cactus", "frida", "stars"]
+    topics.forEach(function (topic) {
+      var button = document.createElement("button")
+      button.innerHTML = topic
+      button.addEventListener("click", function () {
+        handleClick(topic)
+      })
+      console.log(button)
+      document.getElementById("buttons-container").append(button);
+
+    })
+    // Example queryURL for Giphy API
+  </script>
+
+</body>
+
+</html>
